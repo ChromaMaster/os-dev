@@ -1,8 +1,8 @@
 # OS Development
 
-This idea was inspired by (github.com/cfenollosa/os-tutorial)[1].
+This idea was inspired by [github.com/cfenollosa/os-tutorial][1].
 
-Created following the following document: (os-dev.pdf)[1].
+Created following the following document: [os-dev.pdf][1].
 
 
 [1]: https://github.com/cfenollosa/os-tutorial
