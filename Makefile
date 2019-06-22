@@ -1,6 +1,10 @@
-.PHONY: bootloader kernel os_image
+.PHONY: all bootloader kernel os_image clean run
 
 all: bootloader kernel os.img
+
+# $< is the first dependancy
+# $^ is substituted with all of the target’s dependancy files
+# $@ is the target file
 
 bootloader:
 	make -C bootloader	
