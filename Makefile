@@ -12,6 +12,8 @@ bootloader:
 kernel:
 	make -C kernel
 
+# This is the actual disk image that the computer loads ,
+# which is the combination of our compiled bootsector and kernel
 os.img: bootloader kernel
 	cat bootloader/bootloader.bin kernel/kernel.bin > os.img
 
@@ -19,6 +21,6 @@ run: os_image
 	qemu-system-i386 os.img
 
 clean:
-	rm os.img
+	rm -f os.img
 	make clean -C kernel
 	make clean -C bootloader
