@@ -1,6 +1,6 @@
-.PHONY: all bootloader kernel os_image clean run
+.PHONY: all bootloader kernel drivers clean run
 
-all: bootloader kernel os.img
+all: os.img
 
 # $< is the first dependancy
 # $^ is substituted with all of the target’s dependancy files
@@ -9,7 +9,10 @@ all: bootloader kernel os.img
 bootloader:
 	make -C bootloader	
 
-kernel:
+drivers:
+	make -C drivers
+
+kernel: drivers
 	make -C kernel
 
 # This is the actual disk image that the computer loads ,
@@ -17,7 +20,7 @@ kernel:
 os.img: bootloader kernel
 	cat bootloader/bootloader.bin kernel/kernel.bin > os.img
 
-run: os_image
+run: os.img
 	qemu-system-i386 os.img
 
 clean:

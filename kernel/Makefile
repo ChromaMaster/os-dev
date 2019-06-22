@@ -4,7 +4,7 @@ GCC=gcc
 GCC_FLAGS=-ffreestanding -m32 -fno-pie	
 
 C_SOURCES = $(wildcard *.c)
-HEADERS = $(wildcard *.h)
+HEADERS = $(wildcard *.h ../drivers/*.h)
 
 # Convert the *. c filenames to *. o to give a list of object files to build
 OBJ = ${C_SOURCES:.c=.o}
