@@ -43,10 +43,6 @@ void print_char(char character, int row, int col, char attr) {
         vidmem[2 * (MAX_COLS) * (MAX_ROWS)-1] = RED_ON_WHITE;
         return;
     }
-    // // Returns 0 coords are out of the screen
-    // if (row > MAX_ROWS || col > MAX_COLS) {
-    //     return -1;
-    // }
 
     // If attribute byte is zero, assume the default style.
     if (attr == 0) {

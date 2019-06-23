@@ -12,7 +12,7 @@
 
 /**
  * kprint - print message to the screen
- * @message: message to be printed
+ * @param message message to be printed
  * 
  * Print message to the screen at current cursor position
  */
@@ -20,7 +20,7 @@ void kprint(char* message);
 
 /**
  * kprintln - print message to the screen
- * @message: message to be printed
+ * @param message message to be printed
  * 
  * Print message to the screen at current cursor position and add newline
  */
@@ -28,9 +28,9 @@ void kprintln(char* message);
 
 /**
  * print_at - print message to the screen
- * @message: message to be printed
- * @row: row where string starts. max value is 24
- * @col: col where string starts. max value is 79
+ * @param message message to be printed
+ * @param row row where string starts. max value is 24
+ * @param col col where string starts. max value is 79
  * 
  * Print message to the screen at [row, col] position
  */
