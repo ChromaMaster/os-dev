@@ -3,7 +3,7 @@
 GCC=gcc
 GCC_FLAGS=-ffreestanding -m32 -fno-pie	
 
-C_SOURCES = $(wildcard *.c)
+C_SOURCES = $(wildcard *.c ../drivers/*.c)
 HEADERS = $(wildcard *.h ../drivers/*.h)
 
 # Convert the *. c filenames to *. o to give a list of object files to build
@@ -36,7 +36,7 @@ kernel.dump: kernel.o
 # This builds the binary of our kernel from two object files :
 # - the kernel_entry , which jumps to main() in our kernel
 # - the compiled C kernel
-kernel.bin: kernel_entry.o $(OBJ)
+kernel.bin: kernel_entry.o ${OBJ}
 	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary	
 
 kernel.dis: kernel.bin

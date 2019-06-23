@@ -1,8 +1,10 @@
+#include "../drivers/screen.h"
+
 void main() {
-    // Create a pointer to a char , and point it to the first text cell of
-    // video memory (i . e . the top - left of the screen)
-    char *video_memory = (char *)0xb8000;
-    // At the address pointed to by video_memory , store the character ’X ’
-    // (i . e . display ’X ’ in the top - left of the screen).
-    *video_memory = 'X';
+    clear_screen();
+    kprintln("Medium size string");
+    kprint("Large size string that it will be printed to the screen");
+    kprintln("String with end line");
+    kprint("Another stirng");
+    kprint_at("Printed at [25,60]", 23, 79);
 }

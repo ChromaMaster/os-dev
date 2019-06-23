@@ -21,7 +21,7 @@ os.img: bootloader kernel
 	cat bootloader/bootloader.bin kernel/kernel.bin > os.img
 
 run: os.img
-	qemu-system-i386 os.img
+	qemu-system-i386 -fda os.img
 
 clean:
 	rm -f os.img
