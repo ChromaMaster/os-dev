@@ -11,10 +11,21 @@ void kprintln(char *message) {
 }
 
 void kprint_at(char *message, int row, int col) {
+    // Error control: print a red 'E' if the coords aren't right */
+    if (row >= MAX_ROWS || col >= MAX_COLS) {
+        print_char('E', MAX_ROWS - 1, MAX_COLS - 1, RED_ON_WHITE);
+        return;
+    }
+
     // Get current row and col of cursor if there are negative
     int offset;
+
+    // Use the current cursos position
     if (row < 0 || col < 0) {
         offset = get_cursor_offset();
+        // If the current position of the cursor is outside the screen,
+        // scroll the screen and print at the last line
+        offset = scroll_screen(offset);
         row = get_offset_row(offset);
         col = get_offset_col(offset);
     }
@@ -24,9 +35,24 @@ void kprint_at(char *message, int row, int col) {
     while (message[i] != 0) {
         print_char(message[i++], row, col, 0);
         offset = get_cursor_offset();
+        // If the cursor gets out the screen while printing, scroll the screen
+        // and keep printing at the last line
+        offset = scroll_screen(offset);
         row = get_offset_row(offset);
         col = get_offset_col(offset);
     }
+}
+
+void clear_screen() {
+    /* Loop through video memory and write blank characters . */
+    for (int row = 0; row < MAX_ROWS; row++) {
+        for (int col = 0; col < MAX_COLS; col++) {
+            print_char(' ', row, col, WHITE_ON_BLACK);
+        }
+    }
+
+    // Move the cursor back to the top left .
+    set_cursor_offset(get_offset(0, 0));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,13 +62,6 @@ void kprint_at(char *message, int row, int col) {
 void print_char(char character, int row, int col, char attr) {
     // Create a byte (char) pointer to the start of video memory
     unsigned char *vidmem = (unsigned char *)VIDEO_ADDRESS;
-
-    // Error control: print a red 'E' if the coords aren't right */
-    if (col >= MAX_COLS || row >= MAX_ROWS) {
-        vidmem[2 * (MAX_COLS) * (MAX_ROWS)-2] = 'E';
-        vidmem[2 * (MAX_COLS) * (MAX_ROWS)-1] = RED_ON_WHITE;
-        return;
-    }
 
     // If attribute byte is zero, assume the default style.
     if (attr == 0) {
@@ -127,14 +146,26 @@ void set_cursor_offset(int offset) {
     port_byte_out(REG_SCREEN_DATA, (unsigned char)(offset & 0xff));
 }
 
-void clear_screen() {
-    /* Loop through video memory and write blank characters . */
-    for (int row = 0; row < MAX_ROWS; row++) {
-        for (int col = 0; col < MAX_COLS; col++) {
-            print_char(' ', row, col, WHITE_ON_BLACK);
-        }
+int scroll_screen(int offset) {
+    // Make scrolling adjustment, only if the cursor is outside of the screen
+    if (offset < 2 * MAX_ROWS * MAX_COLS) {
+        return offset;
     }
 
-    // Move the cursor back to the top left .
-    set_cursor_offset(get_offset(0, 0));
+    // Copy all the data of one row to the row above, for all the rows
+    for (int i = 1; i < MAX_ROWS; i++) {
+        memory_copy(VIDEO_ADDRESS + get_offset(i, 0),
+                    VIDEO_ADDRESS + get_offset(i - 1, 0),
+                    MAX_COLS * 2);
+    }
+
+    // Clear the last row of the screen
+    char *last_row = VIDEO_ADDRESS + get_offset(MAX_ROWS - 1, 0);
+    for (int i = 0; i < MAX_COLS * 2; i++) {
+        last_row[i] = 0;
+    }
+
+    // Move the cursor at the beginning of the las line
+    offset -= 2 * MAX_COLS;
+    return offset;
 }
