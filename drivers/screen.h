@@ -62,3 +62,6 @@ int get_cursor_offset();
 
 // Move the cursor to offset
 void set_cursor_offset(int offset);
+
+// Scrolls the screen if the cursor get out of the screen
+int scroll_screen(int offset);

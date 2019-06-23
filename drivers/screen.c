@@ -1,4 +1,6 @@
 #include "screen.h"
+#include "../lib/mem.h"
+#include "../lib/types.h"
 #include "io_ports.h"
 
 void kprint(char *message) {
@@ -154,13 +156,13 @@ int scroll_screen(int offset) {
 
     // Copy all the data of one row to the row above, for all the rows
     for (int i = 1; i < MAX_ROWS; i++) {
-        memory_copy(VIDEO_ADDRESS + get_offset(i, 0),
-                    VIDEO_ADDRESS + get_offset(i - 1, 0),
-                    MAX_COLS * 2);
+        memcpy((u8int *)VIDEO_ADDRESS + get_offset(i, 0),
+               (u8int *)VIDEO_ADDRESS + get_offset(i - 1, 0),
+               MAX_COLS * 2);
     }
 
     // Clear the last row of the screen
-    char *last_row = VIDEO_ADDRESS + get_offset(MAX_ROWS - 1, 0);
+    u32int *last_row = (u8int *)VIDEO_ADDRESS + get_offset(MAX_ROWS - 1, 0);
     for (int i = 0; i < MAX_COLS * 2; i++) {
         last_row[i] = 0;
     }
