@@ -11,6 +11,6 @@
  * 
  * Copy n_bytes of bytes from source address to the destination address
  */
-void memcpy(char *src, char *dst, int n_bytes);
+void memcpy(u8int *src, u8int *dst, int n_bytes);
 
 #endif  // !MEM_H

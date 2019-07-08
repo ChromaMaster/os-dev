@@ -1,4 +1,4 @@
-.PHONY: all bootloader lib drivers kernel clean run
+.PHONY: all bootloader libc drivers kernel clean run
 
 all: os.img
 
@@ -9,10 +9,10 @@ all: os.img
 bootloader:
 	make -C bootloader	
 
-lib:
-	make -C lib
+libc:
+	make -C libc
 
-drivers: lib
+drivers: libc
 	make -C drivers
 
 kernel: drivers
@@ -28,7 +28,7 @@ run: os.img
 
 clean:
 	rm -f os.img
-	make clean -C lib
+	make clean -C libc
 	make clean -C drivers
 	make clean -C kernel
 	make clean -C bootloader

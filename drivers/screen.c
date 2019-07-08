@@ -1,6 +1,6 @@
 #include "screen.h"
-#include "../lib/mem.h"
-#include "../lib/types.h"
+#include "../libc/mem.h"
+#include "../libc/types.h"
 #include "io_ports.h"
 
 void kprint(char *message) {
@@ -162,7 +162,7 @@ int scroll_screen(int offset) {
     }
 
     // Clear the last row of the screen
-    u32int *last_row = (u8int *)VIDEO_ADDRESS + get_offset(MAX_ROWS - 1, 0);
+    u8int *last_row = (u8int *)VIDEO_ADDRESS + get_offset(MAX_ROWS - 1, 0);
     for (int i = 0; i < MAX_COLS * 2; i++) {
         last_row[i] = 0;
     }
