@@ -1,12 +1,14 @@
 [bits 16]
+; Fully explained here
+; http://www.osdever.net/tutorials/view/the-world-of-protected-mode
 gdt_start:  ; don't remove the labels, they're needed to compute sizes and jumps
             ; the GDT starts with a null 8-byte
     dd 0x0  ; 4 byte
     dd 0x0  ; 4 byte
 
 ; GDT for code segment. 
-; base = 0x00000000, length = 0x0000ffff
-; for flags, refer to os-dev.pdf document, page 36
+; for flags, refer to os-dev.pdf document, page 36\
+; base = 0x0000, length = 0xffff
 gdt_code: 
     ; 1 st flags : (present)1 (privilege)00 (descriptor type)1 -> 1001 b
     ; type flags : (code)1 (conforming)0 (readable)1 (accessed)0 -> 1010 b
@@ -20,6 +22,7 @@ gdt_code:
 
 ; GDT for data segment. base and length identical to code segment
 ; some flags changed, again, refer to os-dev.pdf
+; base = 0x0000, length = 0xffff
 gdt_data:
     ; Same as code segment except for the type flags :
     ; 1 st flags : (present)1 (privilege)00 (descriptor type)1 -> 1001 b
