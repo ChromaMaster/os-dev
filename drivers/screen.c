@@ -4,15 +4,15 @@
 #include "io_ports.h"
 
 void kprint(char *message) {
-    kprint_at(message, -1, -1);
+    kprint_at(message, -1, -1, WHITE_ON_BLACK);
 }
 
 void kprintln(char *message) {
-    kprint_at(message, -1, -1);
+    kprint_at(message, -1, -1, WHITE_ON_BLACK);
     print_char('\n', -1, -1, 0);
 }
 
-void kprint_at(char *message, int row, int col) {
+void kprint_at(char *message, int row, int col, int attr) {
     // Error control: print a red 'E' if the coords aren't right */
     if (row >= MAX_ROWS || col >= MAX_COLS) {
         print_char('E', MAX_ROWS - 1, MAX_COLS - 1, RED_ON_WHITE);
@@ -35,7 +35,7 @@ void kprint_at(char *message, int row, int col) {
     // Loop through each char of the message and print it.
     int i = 0;
     while (message[i] != 0) {
-        print_char(message[i++], row, col, 0);
+        print_char(message[i++], row, col, attr);
         offset = get_cursor_offset();
         // If the cursor gets out the screen while printing, scroll the screen
         // and keep printing at the last line

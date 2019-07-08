@@ -3,7 +3,24 @@
 #define MAX_COLS 80
 
 // Attribute byte for our default colour scheme.
+
+// All supported colors with black background color
+#define BLUE_ON_BLACK 0x01
+#define GREEN_ON_BLACK 0x02
+#define CYAN_ON_BLACK 0x03
+#define RED_ON_BLACK 0x04
+#define MAGENTA_ON_BLACK 0x05
+#define BROWN_ON_BLACK 0x06
+#define LIGHT_GREY_ON_BLACK 0x07
+#define DARK_GREY_ON_BLACK 0x08
+#define LIGHT_BLUE_ON_BLACK 0x09
+#define LIGHT_GREEN_ON_BLACK 0x0a
+#define LIGHT_CYAN_ON_BLACK 0x0b
+#define LIGHT_RED_ON_BLACK 0x0c
+#define LIGHT_MAGENTA_ON_BLACK 0x0d
+#define LIGHT_BROWN_ON_BLACK 0x0e
 #define WHITE_ON_BLACK 0x0f
+
 #define RED_ON_WHITE 0xf4
 
 // Screen device I / O ports
@@ -31,10 +48,11 @@ void kprintln(char* message);
  * @param message message to be printed
  * @param row row where string starts. max value is 24
  * @param col col where string starts. max value is 79
+ * @param attr attribute for the character (background & foreground colors)
  * 
  * Print message to the screen at [row, col] position
  */
-void kprint_at(char* message, int row, int col);
+void kprint_at(char* message, int row, int col, int attr);
 
 /**
  * clear_screen - clear the screen
