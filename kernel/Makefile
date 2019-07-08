@@ -1,7 +1,16 @@
 .PHONY: all
 
 GCC=gcc
-GCC_FLAGS=-ffreestanding -m32 -fno-pie	
+
+# -ffreestanding: Assert that compilation targets a freestanding environment.
+# A freestanding environment is one in which the standard library may not exist
+# -m32 stack alignment
+# -fno-pie: That flag is telling gcc not to make a position independent 
+# executable (PIE). PIE is a security feature where the kernel loads the binary 
+# and dependencies into a random location of virtual memory each time it's run.
+# -g: Produce debugging information in the operating system's native format 
+# (stabs, COFF, XCOFF, or DWARF).
+GCC_FLAGS=-ffreestanding -m32 -fno-pie -g
 
 C_SOURCES = $(wildcard *.c ../drivers/*.c ../libc/*.c)
 HEADERS = $(wildcard *.h ../drivers/*.h ../libc/*.h)
@@ -20,7 +29,8 @@ $(info "HEADERS: ${HEADERS}")
 $(info "OBJ: ${OBJ}")
 
 all: kernel.bin
-debug: kernel.dump kernel.dis
+
+debug: kernel.dump kernel.dis kernel.elf
 
 # Build our object file .
 %.o: %.c ${HEADERS}
@@ -33,11 +43,15 @@ kernel_entry.o: kernel_entry.asm
 kernel.dump: kernel.o
 	objdump -m i386 -d $< > $@
 
+# Just for debugging
+kernel.elf: kernel_entry.o ${OBJ}
+	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ 
+
 # This builds the binary of our kernel from two object files :
 # - the kernel_entry , which jumps to main() in our kernel
 # - the compiled C kernel
 kernel.bin: kernel_entry.o ${OBJ}
-	ld -non_shared -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary	
+	ld -m elf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary	
 
 kernel.dis: kernel.bin
 	ndisasm -b 32 $< > $@

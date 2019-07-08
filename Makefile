@@ -26,6 +26,12 @@ os.img: bootloader kernel
 run: os.img
 	qemu-system-i386 -fda os.img
 
+# -s  Shorthand for -gdb tcp::1234, i.e. open a gdbserver on TCP port 1234.
+debug: os.img
+	make debug -C kernel
+	qemu-system-i386 -gdb tcp::1234 -fda os.img &
+	gdb -ex "target remote localhost:1234" -ex "symbol-file ./kernel/kernel.elf"
+
 clean:
 	rm -f os.img
 	make clean -C libc
