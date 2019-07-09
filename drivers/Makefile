@@ -1,6 +1,7 @@
 .PHONY: all
 
-GCC=gcc
+# GCC=gcc
+GCC=/usr/local/cross/bin/i686-elf-gcc
 GCC_FLAGS=-ffreestanding -m32 -fno-pie	
 
 C_SOURCES = $(wildcard *.c)

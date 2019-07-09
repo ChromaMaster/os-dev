@@ -1,6 +1,7 @@
 .PHONY: all
 
-GCC=gcc
+# GCC=gcc
+GCC=/usr/local/cross/bin/i686-elf-gcc
 
 # -ffreestanding: Assert that compilation targets a freestanding environment.
 # A freestanding environment is one in which the standard library may not exist
@@ -12,11 +13,11 @@ GCC=gcc
 # (stabs, COFF, XCOFF, or DWARF).
 GCC_FLAGS=-ffreestanding -m32 -fno-pie -g
 
-C_SOURCES = $(wildcard *.c ../drivers/*.c ../libc/*.c)
-HEADERS = $(wildcard *.h ../drivers/*.h ../libc/*.h)
+C_SOURCES = $(wildcard *.c ../drivers/*.c ../libc/*.c ../cpu/*.c)
+HEADERS = $(wildcard *.h ../drivers/*.h ../libc/*.h ../cpu/*.h)
 
 # Convert the *. c filenames to *. o to give a list of object files to build
-OBJ = ${C_SOURCES:.c=.o}
+OBJ = ${C_SOURCES:.c=.o ../cpu/interrupt.o}
 
 # $< is the first dependancy
 # $^ is substituted with all of the target’s dependancy files

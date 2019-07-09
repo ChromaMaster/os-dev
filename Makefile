@@ -1,4 +1,4 @@
-.PHONY: all bootloader libc drivers kernel clean run
+.PHONY: all bootloader libc drivers cpu kernel clean run
 
 all: os.img
 
@@ -15,7 +15,10 @@ libc:
 drivers: libc
 	make -C drivers
 
-kernel: drivers
+cpu: libc
+	make -C cpu
+
+kernel: drivers cpu
 	make -C kernel
 
 # This is the actual disk image that the computer loads ,
@@ -36,5 +39,6 @@ clean:
 	rm -f os.img
 	make clean -C libc
 	make clean -C drivers
+	make clean -C cpu
 	make clean -C kernel
 	make clean -C bootloader
