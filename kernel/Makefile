@@ -11,7 +11,7 @@ GCC=/usr/local/cross/bin/i686-elf-gcc
 # and dependencies into a random location of virtual memory each time it's run.
 # -g: Produce debugging information in the operating system's native format 
 # (stabs, COFF, XCOFF, or DWARF).
-GCC_FLAGS=-ffreestanding -m32 -fno-pie -g
+GCC_FLAGS=-ffreestanding -m32 -g
 
 C_SOURCES = $(wildcard *.c ../drivers/*.c ../libc/*.c ../cpu/*.c)
 HEADERS = $(wildcard *.h ../drivers/*.h ../libc/*.h ../cpu/*.h)

@@ -2,7 +2,11 @@
 
 # GCC=gcc
 GCC=/usr/local/cross/bin/i686-elf-gcc
+<<<<<<< HEAD
 GCC_FLAGS=-ffreestanding -m32 -fno-pie	
+=======
+GCC_FLAGS=-ffreestanding -m32 -g
+>>>>>>> Change compiler to i686 cross compiler
 
 C_SOURCES = $(wildcard *.c)
 HEADERS = $(wildcard *.h)

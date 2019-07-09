@@ -2,7 +2,7 @@
 
 # GCC=gcc
 GCC=/usr/local/cross/bin/i686-elf-gcc
-GCC_FLAGS=-ffreestanding -m32 -fno-pie	
+GCC_FLAGS=-ffreestanding -m32 -g	
 
 C_SOURCES = $(wildcard *.c)
 HEADERS = $(wildcard *.h)
