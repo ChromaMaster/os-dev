@@ -33,7 +33,7 @@
  * 
  * Print message to the screen at current cursor position
  */
-void kprint(char* message);
+void kprint(const char* message);
 
 /**
  * kprintln - print message to the screen
@@ -41,7 +41,7 @@ void kprint(char* message);
  * 
  * Print message to the screen at current cursor position and add newline
  */
-void kprintln(char* message);
+void kprintln(const char* message);
 
 /**
  * print_at - print message to the screen
@@ -52,7 +52,7 @@ void kprintln(char* message);
  * 
  * Print message to the screen at [row, col] position
  */
-void kprint_at(char* message, int row, int col, int attr);
+void kprint_at(const char* message, int row, int col, int attr);
 
 /**
  * clear_screen - clear the screen

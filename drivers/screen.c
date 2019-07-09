@@ -3,16 +3,16 @@
 #include "../libc/types.h"
 #include "io_ports.h"
 
-void kprint(char *message) {
+void kprint(const char *message) {
     kprint_at(message, -1, -1, WHITE_ON_BLACK);
 }
 
-void kprintln(char *message) {
+void kprintln(const char *message) {
     kprint_at(message, -1, -1, WHITE_ON_BLACK);
     print_char('\n', -1, -1, 0);
 }
 
-void kprint_at(char *message, int row, int col, int attr) {
+void kprint_at(const char *message, int row, int col, int attr) {
     // Error control: print a red 'E' if the coords aren't right */
     if (row >= MAX_ROWS || col >= MAX_COLS) {
         print_char('E', MAX_ROWS - 1, MAX_COLS - 1, RED_ON_WHITE);
@@ -156,13 +156,13 @@ int scroll_screen(int offset) {
 
     // Copy all the data of one row to the row above, for all the rows
     for (int i = 1; i < MAX_ROWS; i++) {
-        memcpy((u8int *)VIDEO_ADDRESS + get_offset(i, 0),
-               (u8int *)VIDEO_ADDRESS + get_offset(i - 1, 0),
+        memcpy((u8 *)VIDEO_ADDRESS + get_offset(i, 0),
+               (u8 *)VIDEO_ADDRESS + get_offset(i - 1, 0),
                MAX_COLS * 2);
     }
 
     // Clear the last row of the screen
-    u8int *last_row = (u8int *)VIDEO_ADDRESS + get_offset(MAX_ROWS - 1, 0);
+    u8 *last_row = (u8 *)VIDEO_ADDRESS + get_offset(MAX_ROWS - 1, 0);
     for (int i = 0; i < MAX_COLS * 2; i++) {
         last_row[i] = 0;
     }
